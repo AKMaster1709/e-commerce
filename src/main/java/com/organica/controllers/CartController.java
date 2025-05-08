@@ -16,8 +16,8 @@ import java.security.Principal;
 
 import static org.apache.coyote.http11.Constants.a;
 
+
 @RestController
-@CrossOrigin
 @RequestMapping("/cart")
 public class CartController {
 

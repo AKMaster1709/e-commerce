@@ -10,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@CrossOrigin
 @RequestMapping("/auth")
 public class UserController {
 
@@ -18,7 +17,7 @@ public class UserController {
     private UserService userService;
 
 
-    @PostMapping("/singup")
+    @PostMapping("/signup")
     public ResponseEntity<UserDto> CreateUser(@RequestBody UserDto userDto){
 
         UserDto userDto1 = this.userService.CreateUser(userDto);
@@ -27,7 +26,7 @@ public class UserController {
     }
 
 
-    @PostMapping("/singin")
+    @PostMapping("/signin")
     public ResponseEntity<SingIn> CreateUser(@RequestBody SingIn singIn){
 
         SingIn singIn1 = this.userService.SingIn(singIn);

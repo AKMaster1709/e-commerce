@@ -22,26 +22,41 @@ public class SecurityConfiguration {
     @Autowired
     private AuthenticationProvider authenticationProvider;
 
+//    @Bean
+//    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+//        http.csrf().disable()
+//                .authorizeHttpRequests()
+//                .requestMatchers("/product/**").permitAll() // ✅ Public access
+//                // Add other public endpoints if any
+//                .requestMatchers("/**").hasRole("ADMIN") // Example for admin routes
+//                .anyRequest().authenticated() // ✅ Everything else requires authentication
+//                .and()
+//                .sessionManagement()
+//                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+//                .and()
+//                .authenticationProvider(authenticationProvider)
+//                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+//
+//        return http.build();
+//    }
+
+
     @Bean
-    public SecurityFilterChain securityFilterChain (HttpSecurity http) throws Exception {
-         http.csrf().disable()
-                 .authorizeHttpRequests()
-
-                 .requestMatchers("/**")
-                 .permitAll()
-//                .requestMatchers("/product/**").hasRole(ADMIN.name())
-//                 .requestMatchers("/cart/**").hasRole(ADMIN.name())
-                .anyRequest()
-                .authenticated()
-                 .and()
-                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                 .and()
-                 .authenticationProvider(authenticationProvider)
-                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
-
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http.csrf().disable()
+                .authorizeHttpRequests()
+                .requestMatchers("/auth/**").permitAll() // Public endpoints (adjust as needed)
+                .requestMatchers("/product/**").permitAll() // Allow product endpoint without login
+                .anyRequest().authenticated()
+                .and()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .authenticationProvider(authenticationProvider)
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
+
 
 
 
